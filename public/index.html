@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Image Converter</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="wasm_exec.js"></script>
+    <script>
+        async function initWebAssembly(params) {
+            const go = new Go();
+            const response = await fetch("test.wasm");
+            const buffer = await response.arrayBuffer();
+            const output = await WebAssembly.instantiate(buffer, go.importObject);
+            go.run(output.instance)
+
+            update()
+
+        }
+
+        initWebAssembly()
+    </script>
+
+    <script type="text/javascript">
+        /* The uploader form */
+        $(function () {
+            $(":file").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+
+        function imageIsLoaded(e) {
+            console.log(e.target.result)
+
+            $('#myImg').attr('src', e.target.result);
+            $('#yourImage').attr('src', e.target.result);
+        };
+
+    </script>
+</head>
+
+<body>
+    Hello World
+
+    <div id="data"></div>
+
+    <input type="file" alt="Submit" accept="image/*" width="48" height="48">
+    </br><img id="myImg" src="#" alt="your image">
+
+</body>
+
+</html>
