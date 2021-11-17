@@ -1,2 +1,2 @@
 build:
-	GOOS=js GOARCH=wasm go build -o  public/test.wasm  app/main.go
+	GOOS=js GOARCH=wasm go build -o  public/main.wasm  app/main.go

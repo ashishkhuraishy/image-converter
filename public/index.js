@@ -1,12 +1,9 @@
 async function initWebAssembly(params) {
     const go = new Go();
-    const response = await fetch("test.wasm");
+    const response = await fetch("main.wasm");
     const buffer = await response.arrayBuffer();
     const output = await WebAssembly.instantiate(buffer, go.importObject);
     go.run(output.instance)
-
-    update()
-
 }
 
 function selectImage(arrayList) {
@@ -15,6 +12,7 @@ function selectImage(arrayList) {
 
 function imageIsLoaded(e) {
     console.log("image is loaded")
+    loadImage(e.target.result)
 
     $('#myImg').attr('src', e.target.result);
 };
@@ -25,11 +23,9 @@ function onInputChange(image) {
         var reader = new FileReader()
         reader.onload = imageIsLoaded
         reader.readAsDataURL(input.files[0])
-    } else {
-        $('#myImg').attr('src', '/assets/no_preview.png')
-    }
+    } 
 }
 
 
 
-initWebAssembly()
+initWebAssembly().then(_ => update())
